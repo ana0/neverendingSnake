@@ -1,8 +1,18 @@
-function setup() {
-  //canvas = createCanvas(window.innerWidth, window.innerHeight);
+
+const initBoard = () => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const board = new Array(height/10)
 }
 
-function draw() {
+const initGame = () => {
+
+}
+
+const setup = () => {
+}
+
+const draw = () => {
   // box();
-  ellipse(50, 50, 80, 80);
+  ellipse(50, 50, 10, 10);
 }
