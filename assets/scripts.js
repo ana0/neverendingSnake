@@ -1,11 +1,12 @@
 const board = [];
 const snake = [
   { body: { x: 0, y: 20 },
-  move: false }, 
+  move: 'R' }, 
   { body: { x: 10, y: 20 },
-  move: false },
-  { body: { x: 1360, y: 650 },
-  move: false }]
+  move: 'R' },
+  { body: { x: 20, y: 20 },
+  move: 'R' }]
+let pendingMove = '';
 
 const minX = 0;
 const maxX = (window.innerWidth - window.innerWidth%10);
@@ -26,6 +27,19 @@ const drawSnake = (snake) => {
   })
 }
 
+const moveSnake = (snake) => {
+  snake = snake.map((segment) => {
+  	switch(segment.move) {
+  	  case 'R':
+  	    if (segment.body.x < maxX) segment.body.x = segment.body.x + 10;
+  	    else segment.body.x = minX;
+  	  default:
+  	    console.log('default')
+  	}
+  	return segment;
+  })
+}
+
 // directions
 // R = x + 10
 // L = x - 10
@@ -37,16 +51,24 @@ const initGame = () => {
   console.log(board);
 }
 
+function keyPressed() {
+  if (keyCode === LEFT_ARROW) {
+    value = 255;
+  } else if (keyCode === RIGHT_ARROW) {
+    value = 0;
+  }
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   initGame();
 }
 
 function draw() {
+  background(255)
   fill(0)
   drawSnake(snake);
-  console.log(window.innerWidth)
-  console.log(window.innerHeight)
+  moveSnake(snake);
   //ellipse(50, 50, 80, 80);
 }
 
