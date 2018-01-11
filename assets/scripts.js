@@ -2,44 +2,44 @@ const board = [];
 const snake = [
   { body: { x: 0, y: 20 },
   move: 'L' }, 
-  { body: { x: 10, y: 20 },
-  move: 'L' },
   { body: { x: 20, y: 20 },
-  move: 'L' },
-  { body: { x: 30, y: 20 },
   move: 'L' },
   { body: { x: 40, y: 20 },
   move: 'L' },
-  { body: { x: 50, y: 20 },
-  move: 'L' },
   { body: { x: 60, y: 20 },
   move: 'L' },
-  { body: { x: 70, y: 20 },
+  { body: { x: 80, y: 20 },
+  move: 'L' },
+  { body: { x: 100, y: 20 },
+  move: 'L' },
+  { body: { x: 120, y: 20 },
+  move: 'L' },
+  { body: { x: 140, y: 20 },
   move: 'L' }]
 let pendingMove = 'L';
 
 const minX = 0;
-const maxX = (window.innerWidth - window.innerWidth%10);
+const maxX = (window.innerWidth - window.innerWidth%20);
 const minY = 0;
-const maxY = (window.innerHeight - window.innerHeight%10);
+const maxY = (window.innerHeight - window.innerHeight%20);
 
 const foodLocation = {};
 
 const placeFood = () => {
 	const randomX = Math.random();
-	foodLocation.x = (maxX * randomX) - (maxX * randomX)%10;
+	foodLocation.x = (maxX * randomX) - (maxX * randomX)%20;
 	const randomY = Math.random();
-	foodLocation.y = (maxY * randomY) - (maxY * randomY)%10;
+	foodLocation.y = (maxY * randomY) - (maxY * randomY)%20;
 }
 
 const drawFood = () => {
-	rect(foodLocation.x, foodLocation.y, 10, 10);
+	rect(foodLocation.x, foodLocation.y, 20, 20);
 }
 
 const drawSnake = (snake) => {
   snake.map((segment) => {
   	console.log('drawing snake segment')
-    rect(segment.body.x, segment.body.y, 10, 10)
+    rect(segment.body.x, segment.body.y, 20, 20)
   })
 }
 
@@ -64,19 +64,19 @@ const moveSnake = (snake) => {
   	}
   	switch(segment.move) {
   	  case 'R':
-  	    if (segment.body.x < maxX) segment.body.x = segment.body.x + 10;
+  	    if (segment.body.x < maxX) segment.body.x = segment.body.x + 20;
   	    else segment.body.x = minX;
   	    break;
   	  case 'L':
-  	    if (segment.body.x > minX) segment.body.x = segment.body.x - 10;
+  	    if (segment.body.x > minX) segment.body.x = segment.body.x - 20;
   	    else segment.body.x = maxX;
   	    break;
   	  case 'D':
-  	    if (segment.body.y < maxY) segment.body.y = segment.body.y + 10;
+  	    if (segment.body.y < maxY) segment.body.y = segment.body.y + 20;
   	    else segment.body.y = minX;
   	    break;
   	  case 'U':
-  	    if (segment.body.y > minY) segment.body.y = segment.body.y - 10;
+  	    if (segment.body.y > minY) segment.body.y = segment.body.y - 20;
   	    else segment.body.y = maxY;
   	    break;
   	  default:
@@ -100,6 +100,7 @@ function keyPressed() {
 }
 
 function setup() {
+	frameRate(15)
   createCanvas(windowWidth, windowHeight);
   placeFood()
 }
