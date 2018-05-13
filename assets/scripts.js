@@ -1,4 +1,11 @@
 const board = [];
+// let snake = [];
+
+// for (let i = 0; i < 50000; i += 20) {
+//   snake.push({ body: { x: i, y: 20 },
+//   move: 'L' })
+// }
+
 const snake = [
   { body: { x: 0, y: 20 },
   move: 'L' }, 
