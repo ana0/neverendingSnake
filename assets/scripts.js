@@ -1,29 +1,8 @@
-const board = [];
-// let snake = [];
+let snake = [];
 
-// for (let i = 0; i < 50000; i += 20) {
-//   snake.push({ body: { x: i, y: 20 },
-//   move: 'L' })
-// }
-
-const snake = [
-  { body: { x: 0, y: 20 },
-  move: 'L' }, 
-  { body: { x: 20, y: 20 },
-  move: 'L' },
-  { body: { x: 40, y: 20 },
-  move: 'L' },
-  { body: { x: 60, y: 20 },
-  move: 'L' },
-  { body: { x: 80, y: 20 },
-  move: 'L' },
-  { body: { x: 100, y: 20 },
-  move: 'L' },
-  { body: { x: 120, y: 20 },
-  move: 'L' },
-  { body: { x: 140, y: 20 },
-  move: 'L' }]
 let pendingMove = 'L';
+
+let score = ''
 
 const minX = 0;
 const maxX = (window.innerWidth - window.innerWidth%20);
@@ -31,6 +10,20 @@ const minY = 0;
 const maxY = (window.innerHeight - window.innerHeight%20);
 
 const foodLocation = {};
+
+const initSnake = () => {
+  for (let i = 0; i < 160; i += 20) {
+    snake.push({ body: { x: i, y: 20 },
+    move: 'L' })
+  }
+}
+
+const drawScore = () => {
+  textSize(24);
+  textAlign(LEFT);
+  fill(255, 204, 0);
+  text(score, 30, 50);
+}
 
 const placeFood = () => {
 	const randomX = Math.random();
@@ -44,16 +37,28 @@ const drawFood = () => {
 }
 
 const drawSnake = (snake) => {
+  fill(0);
   snake.map((segment) => {
-  	console.log('drawing snake segment')
     rect(segment.body.x, segment.body.y, 20, 20)
   })
+}
+
+const incrementScore = () => {
+  if (score === '') {
+    score = 1;
+  } else {
+    score = parseInt(score) + 1;
+  }
 }
 
 const detectCollision = () => {
   if (snake[0].body.x === foodLocation.x && snake[0].body.y === foodLocation.y) {
   	snake.push({ body: { x: snake[snake.length-1].body.x, y: snake[snake.length-1].body.y }, move: snake[snake.length-1].move })
   	placeFood();
+  }
+  if (snake[0].body.x === snake[snake.length-1].body.x && snake[0].body.y === snake[snake.length-1].body.y) {
+    console.log('ate tail')
+    incrementScore();
   }
 }
 
@@ -109,15 +114,16 @@ function keyPressed() {
 function setup() {
 	frameRate(15)
   createCanvas(windowWidth, windowHeight);
-  placeFood()
+  initSnake();
+  placeFood();
 }
 
 function draw() {
   background(255)
   fill(0)
   drawFood();
+  drawScore();
   drawSnake(snake);
   moveSnake(snake);
   prepareNextMove(snake);
-  //ellipse(50, 50, 80, 80);
 }
