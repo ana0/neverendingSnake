@@ -4,6 +4,9 @@ let pendingMove = 'L';
 
 let score = ''
 
+let img;
+let inFocus = false;
+
 const minX = 0;
 const maxX = (window.innerWidth - window.innerWidth%20);
 const minY = 0;
@@ -111,6 +114,18 @@ function keyPressed() {
   } 
 }
 
+function preload() {
+  img = loadImage('assets/clicktoplay.png');
+}
+
+function clicktoplay() {
+  image(img, (windowWidth/2)-(img.width/2), (windowHeight/2)-(img.height/2));
+}
+
+function mouseClicked() {
+  inFocus = true;
+}
+
 function setup() {
 	frameRate(15)
   createCanvas(windowWidth, windowHeight);
@@ -126,4 +141,5 @@ function draw() {
   drawSnake(snake);
   moveSnake(snake);
   prepareNextMove(snake);
+  if (!inFocus) { clicktoplay(); }
 }
